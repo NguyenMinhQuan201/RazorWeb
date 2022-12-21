@@ -1,0 +1,72 @@
+﻿@model IEnumerable<Data.Models.SanPham>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a type="button" class="btn btn-success" asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Ten)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Images)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Gia)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Mota)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Rating)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GiaNhap)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdloaiSanPhamNavigation)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ten)
+            </td>
+            <td>
+                <img style="height:80px" src="~/user_content/@Html.DisplayFor(modelItem => item.Images)"/>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Gia)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Mota)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Rating)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GiaNhap)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdloaiSanPhamNavigation.IdloaiSanPham)
+            </td>
+            <td>
+                <a type="button" class="btn btn-info" asp-action="Edit" asp-route-id="@item.IDSanPham">Edit</a> |
+                <a type="button" class="btn btn-warning"asp-action="Details" asp-route-id="@item.IDSanPham">Details</a> |
+                <a type="button" class="btn btn-danger" asp-action="Delete" asp-route-id="@item.IDSanPham">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
