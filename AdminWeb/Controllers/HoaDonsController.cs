@@ -16,13 +16,25 @@ namespace AdminWeb.Controllers
             var result = await _iAPIHoaDons.GetPagings();
             return View(result.data);
         }
-        public async Task<JsonResult> GetIndexAsJson()
+        public async Task<JsonResult> GetIndexAsJson(int? year,int? month)
         {
             var result = await _iAPIHoaDons.GetPagings();
+            string year_now = DateTime.Now.Year.ToString(); ;            
+            if (year != null)
+            {
+                year_now = year.ToString();
+            }
+            if (month != null)
+            {
+                return Json(new
+                {
+                    status = true,
+                    data = result.data.Where(x => x.NgayGio.Value.Year.ToString() == year_now && x.NgayGio.Value.Month.ToString()== month.ToString()).ToList()
+                });
+            }
             return Json(new {
                 status=true,
-                /*data = result.data.OrderBy(x=>x.NgayGio)*/
-                data = result.data.Where(x=>x.NgayGio.Value.Year.ToString() == "2022").ToList()
+                data = result.data.Where(x=>x.NgayGio.Value.Year.ToString() == year_now).ToList()
             });
         }
     }

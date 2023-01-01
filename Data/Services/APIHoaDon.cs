@@ -16,6 +16,7 @@ namespace AdminWeb.Services
         Task<ApiResult<HoaDon>> Delete(int id);
         Task<ApiResult<HoaDon>> Update(HoaDon rq);
         Task<GetByIdVm<HoaDon>> GetById(int id);
+        Task<PagedResult<TheYear>> GetYears();
     }
     public class APIHoaDon : IAPIHoaDons
     {
@@ -87,6 +88,19 @@ namespace AdminWeb.Services
             var body = await response.Content.ReadAsStringAsync();
             var hoadon = JsonConvert.DeserializeObject<PagedResult<HoaDon>>(body);
             return hoadon;
+        }
+
+        public async Task<PagedResult<TheYear>> GetYears()
+        {
+            /*var sessions = _httpContextAccessor.HttpContext.Session.GetString("Token");*/
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            /*client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);*/
+            var response = await client.GetAsync
+                ($"/api/v1/get-year-hoadon");
+            var body = await response.Content.ReadAsStringAsync();
+            var year = JsonConvert.DeserializeObject<PagedResult<TheYear>>(body);
+            return year;
         }
 
         public Task<ApiResult<HoaDon>> Update(HoaDon rq)
